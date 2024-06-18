@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { NotionRenderer } from 'react-notion';
+import { NotionRenderer } from 'react-notion-x';
 import { Link } from 'react-router-dom';
-import { notion } from '../config' // 추가: 포스트를 클릭했을 때 Detail 페이지로 이동하기 위해
+import { notion } from '../config'
+import 'react-notion-x/src/styles.css';
+import 'prismjs/themes/prism-tomorrow.css'; // 추가: 포스트를 클릭했을 때 Detail 페이지로 이동하기 위해
 
 const Blog = () => {
     const [posts, setPosts] = useState([]);

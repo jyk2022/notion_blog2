@@ -1,9 +1,9 @@
-import "react-notion/src/styles.css";
+import "react-notion-x/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { NotionRenderer } from "react-notion";
 import { notion } from '../config';
+import Notion from "../components/Notion";
 
 const Detail = () => {
     const { pageId } = useParams();
@@ -47,12 +47,7 @@ const Detail = () => {
 
     return (
         <div>
-            <h1>{properties?.Name?.title?.[0]?.plain_text || "No Title"}</h1>
-            {Object.keys(page).length > 0 && properties?.Content?.rich_text ? (
-                <NotionRenderer blockMap={page} fullPage={true} />
-            ) : (
-                <div>No content available.</div>
-            )}
+            <Notion pageId={pageId} />
         </div>
     );
 };
