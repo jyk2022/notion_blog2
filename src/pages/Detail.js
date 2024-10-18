@@ -3,16 +3,16 @@ import "prismjs/themes/prism-tomorrow.css";
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { notion } from '../config';
-import NotionRenderer from 'react-notion-x'; // NotionRenderer를 직접 가져옴
+import Notion from "../components/Notion";
 
 const Detail = () => {
     const { pageId } = useParams();
-    const [blockMap, setBlockMap] = useState(null);
+    const [page, setPage] = useState(null);
 
-    const fetchPageBlocks = async () => {
+    const fetchPage = async () => {
         try {
             const response = await fetch(
-                `/api/v1/blocks/${pageId}/children`,
+                `/api/v1/pages/${pageId}`,
                 {
                     method: 'GET',
                     headers: {
@@ -27,25 +27,27 @@ const Detail = () => {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const blockData = await response.json();
-            console.log("블록 데이터 로드 성공:", blockData);
-            setBlockMap(blockData);
+            const pageData = await response.json();
+            console.log("페이지 로드 성공:", pageData);
+            setPage(pageData);
         } catch (error) {
-            console.error("블록 데이터 로드 실패:", error);
+            console.error("페이지 로드 실패:", error);
         }
     };
 
     useEffect(() => {
-        fetchPageBlocks();
+        fetchPage();
     }, [pageId]);
 
-    if (!blockMap) {
+    if (!page) {
         return <div>Loading...</div>;
     }
 
+    const { properties } = page;
+
     return (
         <div>
-            <NotionRenderer blockMap={blockMap} fullPage={true} />
+            <Notion pageId={pageId} />
         </div>
     );
 };
