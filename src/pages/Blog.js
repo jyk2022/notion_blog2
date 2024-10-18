@@ -20,6 +20,7 @@ const Blog = () => {
                             'Notion-Version': '2021-08-16',
                             Authorization: `Bearer ${notion.secret}`,
                         },
+                        body: JSON.stringify({ databaseId: `${notion.databaseId}` }),
                     }
                 );
 
